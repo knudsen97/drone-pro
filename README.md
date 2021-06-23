@@ -12,6 +12,8 @@ PICO
 
 PI 4
 - Battery monitoring 
+- Communication with PICO
+- Vision 
 
 Hardware
 - Breakout board for the PI 4
