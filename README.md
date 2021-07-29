@@ -1,33 +1,31 @@
 # drone-pro
-pug og knudsens lorte drone
 
-Todos 
-
-Software
-
-PICO
+## Todos
+### Software
+PICO:
 - Motor controller
   - PWM
 - Sensor output as quaternion
 - PID controller
 
-PI 4
+PI 4:
 - Battery monitoring 
 - Communication with PICO
 - Vision 
+- Replace with RPI zero
 
-Hardware
+### Hardware
 - Breakout board for the PI 4
 - Soldering 
   - Battery input
   - ESC to battery management board
-  - 5V rail to PI 4
+  - 5V rail to PI 4 --> Cannot get enough amps for pi to boot
 
+## Goals 
 Goal 1 is to get the drone to hover. 
 
 
-Parts
-
+## Parts:
 - DC motor: A2212 2200KV
 - ESC: Simonk 30A
 - Rotor blades: size 6045
