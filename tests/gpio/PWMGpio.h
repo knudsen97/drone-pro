@@ -12,6 +12,8 @@ typedef struct PWMGpio {
     uint32_t top;
 } PWMGpio;
 
+typedef enum {MOTOR, NORMAL}PWMtypes;
+
 /**
  * @brief Sets up a GPIO as PWM with a desired frequency
  * @param pg Is a pointer to the PWMGpio struct containing various information regarding the pwm GPIO.
@@ -68,19 +70,38 @@ void initESC(const PWMGpio* pg)
  * @brief Sets our own defined duty cycle (0-100%) of 5-10% equivalent to 1ms and 2ms, which is the min and max of ESC.
  * @param pg Is a pointer to the PWMGpio struct containing various information regarding the pwm GPIO.
  * @param duty_cycle Is our defined duty-cycle between 0-100%, which corresponds to a value between 1ms and 2ms.
+ * @param type PWM is calculated different if it is PWM for the motor. Therefor use 'NORMAL' if not writing PWM to motor.
  * */
-void setPWM(const PWMGpio* pg, float duty_cycle)
+void setPWM(const PWMGpio* pg, float duty_cycle, PWMtypes type)
 {
     //Find a pulse-width (in ms) based on the duty-cycle:
     if(duty_cycle < 0.0f)
         duty_cycle = 0;
     else if(duty_cycle > 100.0f)
         duty_cycle = 100;
-    float pw_ms = 5 + 0.05 * duty_cycle;    //start duty-cycle (5%) + 1% increase * "homemade dutycycle"
 
+    uint16_t level = 0;
+    float pw_ms = 0;
+
+    switch (type)
+    {
+    case MOTOR:
+        pw_ms = 5 + 0.05 * duty_cycle;              //start duty-cycle (5%) + 1% increase * "homemade dutycycle"
+        level = (pg->top+1) * pw_ms / 100 - 1;      // calculate channel level from given duty cycle in %
+        break;
+
+    case NORMAL:
+        level = (pg->top+1) * duty_cycle / 100 - 1; // calculate channel level from given duty cycle in %
+        break;
+    
+    default:
+        break;
+    }
+    
     // Set duty cycle
-	uint16_t level = (pg->top+1) * pw_ms / 100 - 1; // calculate channel level from given duty cycle in %
 	pwm_set_chan_level(pg->slice_num, pg->pwm_chan, level); 
 }
+
+
 
 #endif

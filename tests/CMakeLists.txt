@@ -23,6 +23,9 @@ pico_sdk_init()
 #add subdirectories
 add_subdirectory(pwm)
 add_subdirectory(bmp280)
+add_subdirectory(pid)
+# add_subdirectory(mpu)
+include_directories(mpu)
 include_directories(gpio)
 
 

@@ -59,10 +59,10 @@ int main()
     float val = 0;
     while(true)
     {
-        setPWM(pwm12p, val);
-        setPWM(pwm13p, val);
-        setPWM(pwm14p, val);
-        setPWM(pwm15p, val);
+        setPWM(pwm12p, val, MOTOR);
+        setPWM(pwm13p, val, MOTOR);
+        setPWM(pwm14p, val, MOTOR);
+        setPWM(pwm15p, val, MOTOR);
         // setPWM(pwm15p, 1);
         // sleep_ms(1000);
         // printf("test\n");
